@@ -17,6 +17,15 @@ def create_login():
             "email": request.form["email"]
     }
     errors = False
+    SpecialSym = ['$', '@', '#', '%', '-']
+    if not any(char in SpecialSym for char in request.form['password']):
+        flash("Password must contain a special character!", 'password_error')
+        errors = True
+
+    
+    if not any(char.isdigit() for char in request.form['password']):
+        flash("Password must contain a number!", 'password_error')
+        errors = True
     
     if len(request.form['first_name']) < 2:
         flash('First Name must be at least 2 characters', 'first_name')
